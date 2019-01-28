@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+{% for survey in list %}
+    <div>
+        <a href='{% url 'survey-detail' survey.id %}'>{{ survey.full_name }}</a>
+    </div>
+{% endfor %}
+
+{% endblock %}

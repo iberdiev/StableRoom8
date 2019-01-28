@@ -1,0 +1,7 @@
+myvenv
+ШПОРА
+*.pyc
+/__pycache__
+app/migrations/__pycache__
+StableRoom8/__pycache__/
+
