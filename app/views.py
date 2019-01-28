@@ -7,6 +7,8 @@ from . forms import SurveyCreateForm
 from . models import Survey
 from . data import countries, year, sleep_time, wake_time, size, campuses, gender
 from django.contrib.auth.decorators import login_required
+from . algorithm import generate_matchings
+from django.core import serializers
 
 def HOME(request):
     num = len(Survey.objects.all())
@@ -29,26 +31,38 @@ def SurveyList(request):
 @login_required
 def NarynMale(request):
     list = Survey.objects.all().filter(campus=0).filter(gender=0)
+    list_json = serializers.serialize('json', list)
+    matchings = generate_matchings.delay(list_json)
     return render(request, 'StableRoom8/NarynMale.html',{'list': list})
 @login_required
 def NarynFemale(request):
     list = Survey.objects.all().filter(campus=0).filter(gender=1)
+    list_json = serializers.serialize('json', list)
+    matchings = generate_matchings.delay(list_json)
     return render(request, 'StableRoom8/NarynFemale.html',{'list': list})
 @login_required
 def KhorogMale(request):
     list = Survey.objects.all().filter(campus=1).filter(gender=0)
+    list_json = serializers.serialize('json', list)
+    matchings = generate_matchings.delay(list_json)
     return render(request, 'StableRoom8/KhorogMale.html',{'list': list})
 @login_required
 def KhorogFemale(request):
     list = Survey.objects.all().filter(campus=1).filter(gender=1)
+    list_json = serializers.serialize('json', list)
+    matchings = generate_matchings.delay(list_json)
     return render(request, 'StableRoom8/KhorogFemale.html',{'list': list})
 @login_required
 def TekeliMale(request):
     list = Survey.objects.all().filter(campus=2).filter(gender=0)
+    list_json = serializers.serialize('json', list)
+    matchings = generate_matchings.delay(list_json)
     return render(request, 'StableRoom8/TekeliMale.html',{'list': list})
 @login_required
 def TekeliFemale(request):
     list = Survey.objects.all().filter(campus=2).filter(gender=1)
+    list_json = serializers.serialize('json', list)
+    matchings = generate_matchings.delay(list_json)
     return render(request, 'StableRoom8/TekeliFemale.html',{'list': list})
 @login_required
 def SurveyDetail(request, id):
@@ -74,6 +88,10 @@ def SurveyDetail(request, id):
                       'extra5': size[survey.extra5],
                       'extra6': survey.extra6,}
     return render(request, 'StableRoom8/SurveyDetail.html',{'info': converted_data})
+
+
+
+
 
 # def apiSurveyList(request):
 #     surveys = Survey.objects.all()
