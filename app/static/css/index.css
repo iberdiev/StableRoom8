@@ -1,4 +1,4 @@
-  #test_div   input[type=text], select {
+  /* #test_div   input[type=text], select {
   width: 50%;
   padding: 12px 20px;
   margin: 8px 0;
@@ -20,8 +20,8 @@
 }
 
 /* The slider itself */
-.slider {
-  -webkit-appearance: none;  /* Override default CSS styles */
+/* .slider {
+  -webkit-appearance: none;  /* Override default CSS styles */ */
   appearance: none;
   width: 100%; /* Full-width */
   height: 25px; /* Specified height */
@@ -35,6 +35,10 @@
 /* Mouse-over effects */
 .slider:hover {
   opacity: 1; /* Fully shown on mouse-over */
+}
+
+input {
+  box-shadow: none;
 }
 
 /* The slider handle (use -webkit- (Chrome, Opera, Safari, Edge) and -moz- (Firefox) to override default look) */
@@ -52,4 +56,4 @@
   height: 25px; /* Slider handle height */
   background: #4CAF50; /* Green background */
   cursor: pointer; /* Cursor on hover */
-}
+} */

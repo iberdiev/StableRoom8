@@ -1,14 +1,18 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load bootstrap4 %}
 
 {% block content %}
 <head>
-  <!-- <link rel="stylesheet" href="{% static "css/index.css" %}"> -->
 </head>
 
+<div class="container">
+  <!-- Content here -->
 
 <form method="post">
   {% csrf_token %}
+  {% bootstrap_form form %}
+
   {{ form.full_name.label_tag }} <br>{{ form.full_name }} <br>
   {{ form.email.error }}
   {{ form.email.label_tag }}<br> {{ form.email }} <br>
@@ -42,17 +46,10 @@
 
 
 
-  <div class="slidecontainer">
-    <input type="range" min="1" max="10" value="5" class="slider" id="Scale1">
-    <p>Value: <span id="val1"></span></p>
-  </div>
-  <script src="{% static 'js/javascript.js' %}"></script>
-
-
   <button type="submit">Submit</button>
 
 </form>
-
+</div>
 
 
 
