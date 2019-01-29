@@ -1,6 +1,8 @@
 from collections import OrderedDict
 from operator import itemgetter
 import copy
+import csv
+
 
 
 ########################################
@@ -127,7 +129,7 @@ def apply(input1):
     step_1 = step1(input1)
     return step3(step2(step_1[0], step_1[1]))
 ########################################
-@shared_task
+
 def executeAlgorithm(quierySet):
     country = {}
     data = {}
@@ -146,10 +148,12 @@ def executeAlgorithm(quierySet):
                 person.scale7,
                 person.scale8
             ]
+
         if country.get(person.country, None) is None:
             country[person.country] = [person.full_name]
         else:
             country[person.country].append(person.full_name)
+    print (data)
 
     # gender dictionary is in the form of gender = {'male': [person1, person2], 'female': [person3, person4]}
     # code below will give to each person their numerical values 🔥🔥🔥🔥🔥
@@ -159,6 +163,7 @@ def executeAlgorithm(quierySet):
         data['NoRoommate'] = []
         for _ in range(len(data[list(data.keys())[0]])):
             data['NoRoommate'].append(5.0)
+
     # code below does several stuff:
     # 1) it finds the preference value for each person to every other person within  gender
     # 2) it sorts the preferences of each person according to the preference value (ascending order)
@@ -166,6 +171,7 @@ def executeAlgorithm(quierySet):
     # 4) each individual preference is being sorted by country (two people from one Country cannot be roommates) unless there are no other chances
     #print(gender)
     subResult = dict()
+
     for person, person_values in data.items():
         subResult[person] = dict()
         for another_person, another_person_values in data.items():
@@ -185,7 +191,6 @@ def executeAlgorithm(quierySet):
             all_names.append(key)
 
         subResult[person] = all_names
-
     for key, items in subResult.items():
         everyone = items[:]
         for country_name, people in country.items():

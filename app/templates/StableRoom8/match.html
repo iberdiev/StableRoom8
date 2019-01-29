@@ -3,10 +3,15 @@
 {% load static %}
 {% block content %}
 <h1>All Roommate pairs</h1>
+
+<a href="http://10.129.0.108:8000/media/{{addr}}.csv">Download</a>
+
 {% for person1, person2 in result.items %}
     <div>
         <h4>{{ person1 }} and {{ person2 }}</h4>
     </div>
 {% endfor %}
+
+
 
 {% endblock %}

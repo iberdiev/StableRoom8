@@ -8,7 +8,8 @@ from . data import countries, year, sleep_time, wake_time, size, campuses, gende
 from django.contrib.auth.decorators import login_required
 from django.core import serializers
 from .algorithm import executeAlgorithm
-
+from django.conf import settings
+import csv, os
 def HOME(request):
     num = len(Survey.objects.all())
     return render(request, 'StableRoom8/index.html', {'num': num} )
@@ -90,28 +91,53 @@ def SurveyDetail(request, id):
 
 @login_required
 def Match(request, campus, gender):
+    filename = ''
     result_string = "Results of matching for "
     if campus == 0:
         result_string += "Naryn campus "
+        filename += 'Naryn'
     elif campus == 1:
         result_string += "Khorog campus "
+        filename += 'Khorog'
     elif campus == 2:
         result_string += "Tekeli campus "
+        filename += 'Tekeli'
     else:
         return HttpResponseNotFound("<h1 style='margin: 0 auto;text-align:center;'>invalid id for campus such campus does not exist</h1>")
 
     if gender == 0:
         result_string += "Male section"
+        filename += 'Male'
     elif gender == 1:
         result_string += "Female section"
+        filename += 'Female'
     else:
         return HttpResponseNotFound("<h1 style='margin: 0 auto;text-align:center;'>Invalid id for gender. Such gender does not exist</h1>")
 
-    result = executeAlgorithm(Survey.objects.filter(campus=campus, gender=gender))
+    result = executeAlgorithm(Survey.objects.filter(campus=campus).filter(gender=gender))
+
     if result:
-        return render(request, 'StableRoom8/match.html', {"result": result})
+
+        full_filename = os.path.join(settings.MEDIA_ROOT, filename+'.csv')
+        with open(full_filename, 'w') as csvFile:
+            writer = csv.writer(csvFile,quoting=csv.QUOTE_ALL)
+            for row in result:
+                writer.writerow([row,result[row]])
+        csvFile.close()
+
+
+        return render(request, 'StableRoom8/match.html', {"result": result, 'addr': filename})
     else:
         return render(request, 'StableRoom8/match.html', {"result": {'No records for this particular campus and gender,': 'matching did not occur'}})
+#
+# def download_csv():
+#
+#     listOfFiles = listdir('media/.')
+#     for i in listOfFiles:
+#         if i.startswith("asdf"):
+#             name = i
+#             remove('media/{}'.format(name))
+
 
 # def apiSurveyList(request):
 #     surveys = Survey.objects.all()
