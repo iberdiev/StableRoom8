@@ -32,3 +32,5 @@ for i in range(len(campuses)):
     CAMPUSES += ((i,campuses[i]),)
 
 gender = ['male', 'female']
+
+yes_no = ['No','Yes']

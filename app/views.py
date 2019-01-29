@@ -4,7 +4,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login, authenticate
 from . forms import SurveyCreateForm
 from . models import Survey
-from . data import countries, year, sleep_time, wake_time, size, campuses, gender
+from . data import countries, year, sleep_time, wake_time, size, campuses, gender, yes_no
 from django.contrib.auth.decorators import login_required
 from django.core import serializers
 from .algorithm import executeAlgorithm
@@ -86,7 +86,9 @@ def SurveyDetail(request, id):
                       'extra3': survey.extra3,
                       'extra4': size[survey.extra4],
                       'extra5': size[survey.extra5],
-                      'extra6': survey.extra6,}
+                      'extra6': survey.extra6,
+                      'want_roommate' : yes_no[survey.want_roommate],
+                      'email_roommate': survey.email_roommate,}
     return render(request, 'StableRoom8/SurveyDetail.html',{'info': converted_data})
 
 @login_required
