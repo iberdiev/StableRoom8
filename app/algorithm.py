@@ -1,8 +1,6 @@
 from collections import OrderedDict
 from operator import itemgetter
 import copy
-import csv
-
 
 
 ########################################
@@ -129,10 +127,6 @@ def apply(input1):
     step_1 = step1(input1)
     return step3(step2(step_1[0], step_1[1]))
 ########################################
-<<<<<<< HEAD
-
-=======
->>>>>>> 55b695199fd6883d6cdbdbe7b1bd76dd457caeea
 def executeAlgorithm(quierySet):
     country = {}
     data = []
@@ -151,34 +145,18 @@ def executeAlgorithm(quierySet):
                 person.scale6,
                 person.scale7,
                 person.scale8
-<<<<<<< HEAD
-            ]
-
-        if country.get(person.country, None) is None:
-            country[person.country] = [person.full_name]
-        else:
-            country[person.country].append(person.full_name)
-    print (data)
-=======
             ])
         country[person.full_name] = person.country
->>>>>>> 55b695199fd6883d6cdbdbe7b1bd76dd457caeea
 
     # gender dictionary is in the form of gender = {'male': [person1, person2], 'female': [person3, person4]}
     # code below will give to each person their numerical values 🔥🔥🔥🔥🔥
     # code below will add another person named 'Unknown' if the number of people in each campus and in each gender has and odd number of
     # people, if a person will be matched   by the unknown the person will not have a roommate :((((
     if len(data) % 2 == 1:
-<<<<<<< HEAD
-        data['NoRoommate'] = []
-        for _ in range(len(data[list(data.keys())[0]])):
-            data['NoRoommate'].append(5.0)
-=======
         data += ['Unknown']
         country['Unknown'] = "Unknown"
         for i in range(1, len(data[0])):
             data[len(data) - 1].append(5)
->>>>>>> 55b695199fd6883d6cdbdbe7b1bd76dd457caeea
 
     # code below does several stuff:
     # 1) it finds the preference value for each person to every other person within  gender
@@ -186,40 +164,6 @@ def executeAlgorithm(quierySet):
     # 3) the preference values are removed and each person will have its preference list of individuals
     # 4) each individual preference is being sorted by country (two people from one Country cannot be roommates) unless there are no other chances
     #print(gender)
-<<<<<<< HEAD
-    subResult = dict()
-
-    for person, person_values in data.items():
-        subResult[person] = dict()
-        for another_person, another_person_values in data.items():
-            if person != another_person:
-                difference = 0
-                for i in range(len(person_values)):
-                    difference += abs(person_values[i] - another_person_values[i])
-
-                subResult[person][another_person] = difference
-
-        # sorts the dictionary according to the score of each ANOTHER_PERSON to PERSON
-        subResult[person] = dict(OrderedDict(sorted(subResult[person].items(), key=itemgetter(1))))
-
-        # code below removes the numbers from the dictionary entirely
-        all_names = []
-        for key in subResult[person].keys():
-            all_names.append(key)
-
-        subResult[person] = all_names
-    for key, items in subResult.items():
-        everyone = items[:]
-        for country_name, people in country.items():
-            for item in items:
-                if item in people and key in people:
-                    everyone.append(item)
-                    del everyone[everyone.index(item)]
-
-        subResult[key] = everyone
-
-
-=======
     data = sorted(data, key=lambda x: x[0])
     preferenceList = []
     for i in range(len(data)):
@@ -255,7 +199,6 @@ def executeAlgorithm(quierySet):
                 k += 1
     # Getting the information about the country of each person
     
->>>>>>> 55b695199fd6883d6cdbdbe7b1bd76dd457caeea
     #applying the algorithm and
     beforeMainAlgorithm = {"preferences": sortedPreference}
     result = apply(beforeMainAlgorithm)
