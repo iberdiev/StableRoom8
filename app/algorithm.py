@@ -152,8 +152,9 @@ def executeAlgorithm(quierySet):
     # code below will give to each person their numerical values 🔥🔥🔥🔥🔥
     # code below will add another person named 'Unknown' if the number of people in each campus and in each gender has and odd number of
     # people, if a person will be matched   by the unknown the person will not have a roommate :((((
-    if len(data) % 2 == 1:
-        data += ['Unknown']
+
+    if len(data) % 2 != 0:
+        data.append(['Unknown'])
         country['Unknown'] = "Unknown"
         for i in range(1, len(data[0])):
             data[len(data) - 1].append(5)
@@ -186,7 +187,7 @@ def executeAlgorithm(quierySet):
         for j in range(len(preferenceList[i][1])):
             preferences.append(preferenceList[i][1][j][0])
         sortedPreference[preferenceList[i][0]] = preferences
-    
+
     for key in sortedPreference:
         i = 0
         k = 0
@@ -198,7 +199,7 @@ def executeAlgorithm(quierySet):
                 del sortedPreference[key][i]
                 k += 1
     # Getting the information about the country of each person
-    
+
     #applying the algorithm and
     beforeMainAlgorithm = {"preferences": sortedPreference}
     result = apply(beforeMainAlgorithm)
