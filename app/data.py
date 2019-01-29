@@ -4,7 +4,7 @@ for i in range(10):
 
 
 COUNTRIES = tuple()
-countries = ['Kyrgyzstan','Tajikistan','Kazakhstan']
+countries = ['Kyrgyzstan','Tajikistan','Kazakhstan','Pakistan']
 for i in range(len(countries)):
     COUNTRIES += ((i,countries[i]),)
 

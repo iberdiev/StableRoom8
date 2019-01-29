@@ -2,13 +2,12 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import TemplateView
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login, authenticate
-from django.http import JsonResponse
 from . forms import SurveyCreateForm
 from . models import Survey
 from . data import countries, year, sleep_time, wake_time, size, campuses, gender
 from django.contrib.auth.decorators import login_required
-from . algorithm import generate_matchings
 from django.core import serializers
+from .algorithm import executeAlgorithm
 
 def HOME(request):
     num = len(Survey.objects.all())
@@ -31,38 +30,38 @@ def SurveyList(request):
 @login_required
 def NarynMale(request):
     list = Survey.objects.all().filter(campus=0).filter(gender=0)
-    list_json = serializers.serialize('json', list)
-    matchings = generate_matchings.delay(list_json)
+    # list_json = serializers.serialize('json', list)
+    # matchings = generate_matchings.delay(list_json)
     return render(request, 'StableRoom8/NarynMale.html',{'list': list})
 @login_required
 def NarynFemale(request):
     list = Survey.objects.all().filter(campus=0).filter(gender=1)
-    list_json = serializers.serialize('json', list)
-    matchings = generate_matchings.delay(list_json)
+    # list_json = serializers.serialize('json', list)
+    # matchings = generate_matchings.delay(list_json)
     return render(request, 'StableRoom8/NarynFemale.html',{'list': list})
 @login_required
 def KhorogMale(request):
     list = Survey.objects.all().filter(campus=1).filter(gender=0)
-    list_json = serializers.serialize('json', list)
-    matchings = generate_matchings.delay(list_json)
+    # list_json = serializers.serialize('json', list)
+    # matchings = generate_matchings.delay(list_json)
     return render(request, 'StableRoom8/KhorogMale.html',{'list': list})
 @login_required
 def KhorogFemale(request):
     list = Survey.objects.all().filter(campus=1).filter(gender=1)
-    list_json = serializers.serialize('json', list)
-    matchings = generate_matchings.delay(list_json)
+    # list_json = serializers.serialize('json', list)
+    # matchings = generate_matchings.delay(list_json)
     return render(request, 'StableRoom8/KhorogFemale.html',{'list': list})
 @login_required
 def TekeliMale(request):
     list = Survey.objects.all().filter(campus=2).filter(gender=0)
-    list_json = serializers.serialize('json', list)
-    matchings = generate_matchings.delay(list_json)
+    # list_json = serializers.serialize('json', list)
+    # matchings = generate_matchings.delay(list_json)
     return render(request, 'StableRoom8/TekeliMale.html',{'list': list})
 @login_required
 def TekeliFemale(request):
     list = Survey.objects.all().filter(campus=2).filter(gender=1)
-    list_json = serializers.serialize('json', list)
-    matchings = generate_matchings.delay(list_json)
+    # list_json = serializers.serialize('json', list)
+    # matchings = generate_matchings.delay(list_json)
     return render(request, 'StableRoom8/TekeliFemale.html',{'list': list})
 @login_required
 def SurveyDetail(request, id):
@@ -89,9 +88,30 @@ def SurveyDetail(request, id):
                       'extra6': survey.extra6,}
     return render(request, 'StableRoom8/SurveyDetail.html',{'info': converted_data})
 
+@login_required
+def Match(request, campus, gender):
+    result_string = "Results of matching for "
+    if campus == 0:
+        result_string += "Naryn campus "
+    elif campus == 1:
+        result_string += "Khorog campus "
+    elif campus == 2:
+        result_string += "Tekeli campus "
+    else:
+        return HttpResponseNotFound("<h1 style='margin: 0 auto;text-align:center;'>invalid id for campus such campus does not exist</h1>")
 
+    if gender == 0:
+        result_string += "Male section"
+    elif gender == 1:
+        result_string += "Female section"
+    else:
+        return HttpResponseNotFound("<h1 style='margin: 0 auto;text-align:center;'>Invalid id for gender. Such gender does not exist</h1>")
 
-
+    result = executeAlgorithm(Survey.objects.filter(campus=campus, gender=gender))
+    if result:
+        return render(request, 'StableRoom8/match.html', {"result": result})
+    else:
+        return render(request, 'StableRoom8/match.html', {"result": {'No records for this particular campus and gender,': 'matching did not occur'}})
 
 # def apiSurveyList(request):
 #     surveys = Survey.objects.all()
