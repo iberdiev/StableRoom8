@@ -129,16 +129,20 @@ def apply(input1):
     step_1 = step1(input1)
     return step3(step2(step_1[0], step_1[1]))
 ########################################
+<<<<<<< HEAD
 
+=======
+>>>>>>> 55b695199fd6883d6cdbdbe7b1bd76dd457caeea
 def executeAlgorithm(quierySet):
     country = {}
-    data = {}
+    data = []
     # code below takes the data from EXCEL file
     # data will have all the numeric values that is sent by the users
     # campus will have campus names as keys and the list of names of the students as a value to key
     # same with gender and country.
     for person in quierySet:
-        data[person.full_name] = [
+        data.append( [
+                person.full_name,
                 person.scale1,
                 person.scale2,
                 person.scale3,
@@ -147,6 +151,7 @@ def executeAlgorithm(quierySet):
                 person.scale6,
                 person.scale7,
                 person.scale8
+<<<<<<< HEAD
             ]
 
         if country.get(person.country, None) is None:
@@ -154,15 +159,26 @@ def executeAlgorithm(quierySet):
         else:
             country[person.country].append(person.full_name)
     print (data)
+=======
+            ])
+        country[person.full_name] = person.country
+>>>>>>> 55b695199fd6883d6cdbdbe7b1bd76dd457caeea
 
     # gender dictionary is in the form of gender = {'male': [person1, person2], 'female': [person3, person4]}
     # code below will give to each person their numerical values 🔥🔥🔥🔥🔥
     # code below will add another person named 'Unknown' if the number of people in each campus and in each gender has and odd number of
-    # people, if a person will be matched by the unknown the person will not have a roommate :((((
+    # people, if a person will be matched   by the unknown the person will not have a roommate :((((
     if len(data) % 2 == 1:
+<<<<<<< HEAD
         data['NoRoommate'] = []
         for _ in range(len(data[list(data.keys())[0]])):
             data['NoRoommate'].append(5.0)
+=======
+        data += ['Unknown']
+        country['Unknown'] = "Unknown"
+        for i in range(1, len(data[0])):
+            data[len(data) - 1].append(5)
+>>>>>>> 55b695199fd6883d6cdbdbe7b1bd76dd457caeea
 
     # code below does several stuff:
     # 1) it finds the preference value for each person to every other person within  gender
@@ -170,6 +186,7 @@ def executeAlgorithm(quierySet):
     # 3) the preference values are removed and each person will have its preference list of individuals
     # 4) each individual preference is being sorted by country (two people from one Country cannot be roommates) unless there are no other chances
     #print(gender)
+<<<<<<< HEAD
     subResult = dict()
 
     for person, person_values in data.items():
@@ -202,10 +219,46 @@ def executeAlgorithm(quierySet):
         subResult[key] = everyone
 
 
+=======
+    data = sorted(data, key=lambda x: x[0])
+    preferenceList = []
+    for i in range(len(data)):
+        subPreference = [data[i][0]]
+        subOfContent = []
+        for j in range(len(data)):
+            if i != j:
+                subOfPerson = [data[j][0]]
+                difference = 0
+                for u in range(1, len(data[i])):
+                    difference += abs(data[i][u] - data[j][u])
+                subOfPerson.append(difference)
+                subOfContent.append(subOfPerson)
+        subOfContent = sorted(subOfContent, key=lambda subOfContent: subOfContent[1])
+        subPreference.append(subOfContent)
+        preferenceList.append(subPreference)
+    sortedPreference = {}
+    for i in range(len(preferenceList)):
+        preferences = []
+        for j in range(len(preferenceList[i][1])):
+            preferences.append(preferenceList[i][1][j][0])
+        sortedPreference[preferenceList[i][0]] = preferences
+    
+    for key in sortedPreference:
+        i = 0
+        k = 0
+        while i + k < len(sortedPreference[key]):
+            if country[key] != country[sortedPreference[key][i]]:
+                i += 1
+            else:
+                sortedPreference[key].append(sortedPreference[key][i])
+                del sortedPreference[key][i]
+                k += 1
+    # Getting the information about the country of each person
+    
+>>>>>>> 55b695199fd6883d6cdbdbe7b1bd76dd457caeea
     #applying the algorithm and
-    data = subResult
-    preferences = {"preferences": data}
-    result = apply(preferences)
+    beforeMainAlgorithm = {"preferences": sortedPreference}
+    result = apply(beforeMainAlgorithm)
     final_result = {}
     for key, item in result.items():
         if key != final_result.get(item[0]):
