@@ -27,6 +27,9 @@ class Survey(models.Model):
     extra4 = models.PositiveSmallIntegerField(choices=SIZE)
     extra5 = models.PositiveSmallIntegerField(choices=SIZE)
     extra6 = models.TextField(max_length=500, blank=True)
+    want_roommate = models.PositiveSmallIntegerField(choices=((0,'No'),(1,'Yes')), blank=True, default=0)
+    email_roommate = models.EmailField(max_length=254, blank=True)
+
 
 
 

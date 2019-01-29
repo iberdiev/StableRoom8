@@ -25,6 +25,11 @@
   Approximately what time would you usually wake up? {{ form.scale7 }} <br>
   How shy or outgoing you are? (0-shy, 10-outgoing): {{ form.scale8 }} <br>
   Do you have any health issues and allergies to food or other items that we should know about:<br>{{ form.extra1 }} <br>
+  Do you want to choose a specific person as a roommate(you can choose if you are sophomore or older)?<br>
+  {{ form.want_roommate }}<br>
+  If yes, put the UCA email of a student(should be sophomore or older):<br>
+  {{ form.email_roommate.error }}
+  {{ form.email_roommate }}<br>
   What is your emergency contact person?<br>
   What is their name and how are they related to you?<br>
   What is their phone number?<br>
