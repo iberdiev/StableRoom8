@@ -1,7 +1,7 @@
 from collections import OrderedDict
 from operator import itemgetter
 import copy
-
+from .models import Survey
 
 ########################################
 def getKeyByVal(inptDict, inputVal):
@@ -128,6 +128,20 @@ def apply(input1):
     return step3(step2(step_1[0], step_1[1]))
 ########################################
 def executeAlgorithm(quierySet):
+    preMates = []
+    chosen = []
+    for person in quierySet:
+        if person.year > 1 and person.want_roommate == 1:
+            pair = {
+                person.email,
+                person.email_roommate
+            }
+            if pair in chosen:
+                preMates.append(person.email)
+                preMates.append(person.email_roommate)
+            else:
+                chosen.append(pair)
+
     country = {}
     data = []
     # code below takes the data from EXCEL file
@@ -135,18 +149,19 @@ def executeAlgorithm(quierySet):
     # campus will have campus names as keys and the list of names of the students as a value to key
     # same with gender and country.
     for person in quierySet:
-        data.append( [
-                person.full_name,
-                person.scale1,
-                person.scale2,
-                person.scale3,
-                person.scale4,
-                person.scale5,
-                person.scale6,
-                person.scale7,
-                person.scale8
-            ])
-        country[person.full_name] = person.country
+        if person.email not in preMates:
+            data.append([
+                    person.full_name,
+                    person.scale1,
+                    person.scale2,
+                    person.scale3,
+                    person.scale4,
+                    person.scale5,
+                    person.scale6,
+                    person.scale7,
+                    person.scale8
+                ])
+            country[person.full_name] = person.country
 
     # gender dictionary is in the form of gender = {'male': [person1, person2], 'female': [person3, person4]}
     # code below will give to each person their numerical values 🔥🔥🔥🔥🔥
@@ -208,4 +223,8 @@ def executeAlgorithm(quierySet):
         if key != final_result.get(item[0]):
                 final_result[key] = item[0]
 
+    for i in range(0, len(preMates), 2):
+        person1 = Survey.objects.filter(email=preMates[i], email_roommate=preMates[i+1])[0].full_name
+        person2 = Survey.objects.filter(email=preMates[i + 1], email_roommate=preMates[i])[0].full_name
+        final_result[person1] = person2
     return final_result
