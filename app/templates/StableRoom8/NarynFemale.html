@@ -4,7 +4,7 @@
 <div>
     <a href='{% url 'match' 0 1 %}'><h2>Match</h2></a>
 </div>
-
+Number of students: {{ length1 }} 
 {% for survey in list %}
     <div>
         <a href='{% url 'survey-detail' survey.id %}'>{{ survey.full_name }}</a>

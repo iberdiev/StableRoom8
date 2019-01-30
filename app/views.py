@@ -11,8 +11,7 @@ from .algorithm import executeAlgorithm
 from django.conf import settings
 import csv, os
 def HOME(request):
-    num = len(Survey.objects.all())
-    return render(request, 'StableRoom8/index.html', {'num': num} )
+    return render(request, 'StableRoom8/index.html')
 
 def SURVEY(request):
     if request.method == 'POST':
@@ -31,39 +30,41 @@ def SurveyList(request):
 @login_required
 def NarynMale(request):
     list = Survey.objects.all().filter(campus=0).filter(gender=0)
+
+
     # list_json = serializers.serialize('json', list)
     # matchings = generate_matchings.delay(list_json)
-    return render(request, 'StableRoom8/NarynMale.html',{'list': list})
+    return render(request, 'StableRoom8/NarynMale.html',{'list': list, 'length1':len(list)})
 @login_required
 def NarynFemale(request):
     list = Survey.objects.all().filter(campus=0).filter(gender=1)
     # list_json = serializers.serialize('json', list)
     # matchings = generate_matchings.delay(list_json)
-    return render(request, 'StableRoom8/NarynFemale.html',{'list': list})
+    return render(request, 'StableRoom8/NarynFemale.html',{'list': list, 'length1':len(list)})
 @login_required
 def KhorogMale(request):
     list = Survey.objects.all().filter(campus=1).filter(gender=0)
     # list_json = serializers.serialize('json', list)
     # matchings = generate_matchings.delay(list_json)
-    return render(request, 'StableRoom8/KhorogMale.html',{'list': list})
+    return render(request, 'StableRoom8/KhorogMale.html',{'list': list, 'length1':len(list)})
 @login_required
 def KhorogFemale(request):
     list = Survey.objects.all().filter(campus=1).filter(gender=1)
     # list_json = serializers.serialize('json', list)
     # matchings = generate_matchings.delay(list_json)
-    return render(request, 'StableRoom8/KhorogFemale.html',{'list': list})
+    return render(request, 'StableRoom8/KhorogFemale.html',{'list': list,'length1':len(list)})
 @login_required
 def TekeliMale(request):
     list = Survey.objects.all().filter(campus=2).filter(gender=0)
     # list_json = serializers.serialize('json', list)
     # matchings = generate_matchings.delay(list_json)
-    return render(request, 'StableRoom8/TekeliMale.html',{'list': list})
+    return render(request, 'StableRoom8/TekeliMale.html',{'list': list,'length1':len(list)})
 @login_required
 def TekeliFemale(request):
     list = Survey.objects.all().filter(campus=2).filter(gender=1)
     # list_json = serializers.serialize('json', list)
     # matchings = generate_matchings.delay(list_json)
-    return render(request, 'StableRoom8/TekeliFemale.html',{'list': list})
+    return render(request, 'StableRoom8/TekeliFemale.html',{'list': list,'length1':len(list)})
 @login_required
 def SurveyDetail(request, id):
     survey = Survey.objects.get(id=id)
