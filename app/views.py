@@ -16,12 +16,34 @@ def HOME(request):
 def SURVEY(request):
     if request.method == 'POST':
         form = SurveyCreateForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('HOME')
-    else:
-        form = SurveyCreateForm()
-    return render(request, 'StableRoom8/survey.html', {'form': form})
+        survey = Survey(
+            full_name=request.POST['fullName'],
+            email=request.POST['email'],
+            country=request.POST['countryRadios'],
+            campus=request.POST['campusRadios'],
+            gender=request.POST['genderRadios'],
+            year=request.POST['yearRadios'],
+            scale1=request.POST['messyClean'],
+            scale2=request.POST['silenceLoud'],
+            scale3=request.POST['difficultEasy'],
+            scale4=request.POST['noDefinetely'],
+            scale5=request.POST['darknessLight'],
+            scale6=request.POST['shyOutgoing'],
+            scale7=request.POST['sleepEarlyLate'],
+            scale8=request.POST['getUpEarlyLate'],
+            extra1=request.POST['healthIssues'],
+            extra2=request.POST['emergency'],
+            extra3=request.POST['whatsApp'],
+            extra4=size.index(request.POST['tShirtSize']),
+            extra5=size.index(request.POST['hoodieSize']),
+            extra6=request.POST['comments'],
+            want_roommate=request.POST['wantRoommate'],
+            email_roommate=request.POST['emailRoommate']
+        )   
+        survey.save()
+        return redirect('/')
+
+    return render(request, 'StableRoom8/survey.html')
 
 @login_required
 def SurveyList(request):
@@ -132,44 +154,3 @@ def Match(request, campus, gender):
         return render(request, 'StableRoom8/match.html', {"result": result, 'addr': filename})
     else:
         return render(request, 'StableRoom8/match.html', {"result": {'No records for this particular campus and gender,': 'matching did not occur'}})
-#
-# def download_csv():
-#
-#     listOfFiles = listdir('media/.')
-#     for i in listOfFiles:
-#         if i.startswith("asdf"):
-#             name = i
-#             remove('media/{}'.format(name))
-
-
-# def apiSurveyList(request):
-#     surveys = Survey.objects.all()
-#     data = {"results": list(surveys.values('full_name', 'email', 'country','gender', 'year',
-#                                            'scale1','scale2','scale3','scale4','scale5','scale6','scale7','scale8',
-#                                            'extra1','extra2','extra3','extra4','extra5','extra6'))}
-#     return JsonResponse(data)
-#
-# def apiSurveyDetail(request, pk):
-#     survey = get_object_or_404(Survey, pk=pk)
-#     data = {"results": {
-#                 "full_name": survey.full_name,
-#                 "email": survey.email,
-#                 "country": survey.country,
-#                 "gender": survey.gender,
-#                 "year": survey.year,
-#                 "scale1": survey.scale1,
-#                 "scale2": survey.scale2,
-#                 "scale3": survey.scale3,
-#                 "scale4": survey.scale4,
-#                 "scale5": survey.scale5,
-#                 "scale6": survey.scale6,
-#                 "scale7": survey.scale7,
-#                 "scale8": survey.scale8,
-#                 "extra1": survey.extra1,
-#                 "extra2": survey.extra2,
-#                 "extra3": survey.extra3,
-#                 "extra4": survey.extra4,
-#                 "extra5": survey.extra5,
-#                 "extra6": survey.extra6,
-#     }}
-#     return JsonResponse(data)

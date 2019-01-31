@@ -5,16 +5,7 @@ from . data import CHOICES, SLEEP_TIME, WAKE_TIME
 
 class SurveyCreateForm(forms.ModelForm):
 
-
-
-    scale1 = forms.ChoiceField(choices=CHOICES, widget=forms.RadioSelect)
-    scale2 = forms.ChoiceField(choices=CHOICES, widget=forms.RadioSelect)
-    scale3 = forms.ChoiceField(choices=CHOICES, widget=forms.RadioSelect)
-    scale4 = forms.ChoiceField(choices=CHOICES, widget=forms.RadioSelect)
-    scale5 = forms.ChoiceField(choices=CHOICES, widget=forms.RadioSelect)
-    scale6 = forms.ChoiceField(choices=SLEEP_TIME, widget=forms.RadioSelect)
-    scale7 = forms.ChoiceField(choices=WAKE_TIME, widget=forms.RadioSelect)
-    scale8 = forms.ChoiceField(choices=CHOICES, widget=forms.RadioSelect)
+    
 
     class Meta:
         model = Survey

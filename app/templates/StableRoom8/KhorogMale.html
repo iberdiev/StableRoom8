@@ -1,14 +1,20 @@
-{% extends 'base.html' %}
+{% extends 'StableRoom8/index.html' %}
 {% load static %}
 {% block content %}
-<div>
-    <a href='{% url 'match' 1 0 %}'><h2>Match</h2></a>
+
+<div class="sections row">
+    <div class="col col-sm-6 text-left">
+        <h3>Number of students: {{ length1 }} </h3>
+    </div>
+    <div class="col col-sm-6 text-right">
+        <h2><a href='{% url 'match' 1 0 %}'>Match</a></h2>
+    </div>
 </div>
-Number of students: {{ length1 }} 
+<div class="sections">
 {% for survey in list %}
     <div>
         <a href='{% url 'survey-detail' survey.id %}'>{{ survey.full_name }}</a>
     </div>
 {% endfor %}
-
+</div>
 {% endblock %}

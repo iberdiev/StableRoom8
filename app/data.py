@@ -11,12 +11,12 @@ for i in range(len(countries)):
 year = ['Preparatory','Freshman','Sophomore','Junior','Senior']
 YEAR = ((0,'Preparatory'),(1,'Freshman'),(2,'Sophomore'),(3,'Junior'),(4,'Senior'))
 
-sleep_time = ['9', '9:30', '10', '10:30','11', '11:30','12', '12:30','1', '1:30']
+sleep_time = ['8:30PM or earlier','9PM', '9:30PM', '10PM', '10:30PM','11PM', '11:30PM','12AM', '12:30AM','1AM', '1:30AM or later']
 SLEEP_TIME = []
 for i in range(len(sleep_time)):
     SLEEP_TIME.append((i,sleep_time[i]))
 
-wake_time=['5','5:30','6','6:30','7','7:30','8','8:30','9','9:30']
+wake_time=['5AM','5:30AM','6AM','6:30AM','6AM','7:30AM','8AM','8:30','9','9:30','10:00 or later']
 WAKE_TIME = []
 for i in range(len(wake_time)):
     WAKE_TIME.append((i,wake_time[i]))

@@ -1,0 +1,16 @@
+body{
+    background: #7f8fa6;
+    font-family: 'Raleway', sans-serif;
+}
+
+.container{
+    padding:50px 60px;
+}
+
+.sections{
+    background: #ffffff;
+    border:4px solid none;
+    padding:20px 40px; 
+    border-radius:30px;
+    margin:15px 0;
+}

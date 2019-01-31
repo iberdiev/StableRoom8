@@ -1,17 +1,22 @@
-
-{% extends 'base.html' %}
+{% extends 'StableRoom8/index.html' %}
 {% load static %}
 {% block content %}
-<h1>All Roommate pairs</h1>
+<div class="sections">
+<h1>All Roommate pairs <a href="http://127.0.0.1:8000/media/{{addr}}.csv">Download</a></h1>
 
-<a href="http://127.0.0.1:8000/media/{{addr}}.csv">Download</a>
 
 {% for person1, person2 in result.items %}
-    <div>
-        <h4>{{ person1 }} and {{ person2 }}</h4>
+    <div class="row">
+        <div class="col col-ms-6">
+            <h4>{{ person1 }}</h4>
+        </div>
+        <div class="col col-ms-6">
+            <h4>{{ person2 }}</h4>
+        </div>
     </div>
 {% endfor %}
 
+</div>
 
 
 {% endblock %}
