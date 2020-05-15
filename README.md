@@ -1,8 +1,4 @@
 # StableRoom8
-# DEVELOPMENT IN PROGRESS
+Implemenation of Irving's algorithm to generated the most stable matching such that overall preference of a roommates will be maximum, which increases that overall happiness of a roomates.
 
-'USER':'root',
-'PASSWORD':'password',
-'PORT':'3306',
-'HOST':'localhost',
-'NAME':'survey_data',
+https://en.wikipedia.org/wiki/Stable_roommates_problem
